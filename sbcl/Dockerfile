@@ -25,4 +25,10 @@ EXPOSE 4005
 
 COPY start-orihime-and-swank.lisp /root/
 
+# For generating Anki cards
+RUN apt-get install -y python3 python3-pip portaudio19-dev
+RUN cd /usr/local/src && git clone https://github.com/dae/anki.git --branch 2.1.8
+RUN ln -sf /usr/local/src/anki/anki /usr/lib/python3/dist-packages
+RUN pip3 install -r /usr/local/src/anki/requirements.txt
+
 CMD sbcl --load /root/start-orihime-and-swank.lisp

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sbcl-deployment
+  namespace: orihime
+  labels:
+    app: sbcl
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sbcl
+  template:
+    metadata:
+      labels:
+        app: sbcl
+    spec:
+      containers:
+      - name: sbcl
+        image: localhost:5000/sbcl:latest
+        ports:
+        - containerPort: 4005

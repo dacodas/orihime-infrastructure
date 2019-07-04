@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goo-local-deployment
+  namespace: orihime
+  labels:
+    app: goo-local
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: goo-local
+  template:
+    metadata:
+      labels:
+        app: goo-local
+    spec:
+      containers:
+      - name: goo-local
+        image: localhost:5000/goo-local:latest
+        ports:
+        - containerPort: 7081
