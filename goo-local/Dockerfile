@@ -15,6 +15,7 @@ RUN git clone https://github.com/dacodas/goo-processing /root/goo-processing
 RUN mkdir /root/goo-processing/results
 ADD goo-processing/results/trie /root/goo-processing/results/
 RUN ["make", "-C", "/root/goo-processing/", "CFLAGS=-DGOO_TRIE_LOCATION_STRING=\"\\\"/root/goo-processing/results/trie\\\"\""]
+RUN mkdir -p /var/lib/goo/data/dictionary-entries
 
 EXPOSE 7081
 

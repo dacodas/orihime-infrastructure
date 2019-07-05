@@ -6,7 +6,8 @@ FROM mysql/mysql-server
 RUN yum -y install glibc-common
 ENV LANG=ja_JP.UTF-8
 
-RUN sed -i -e 's@datadir=/var/lib/mysql@datadir=/var/lib/mysql-volume@' /etc/my.cnf
+RUN sed -i -e 's@datadir=/var/lib/mysql@datadir=/var/lib/orihime/mysql@' /etc/my.cnf
+COPY orihime-schema.sql /docker-entrypoint-initdb.d/orihime-schema.sql
 
 EXPOSE 3306 33060
 CMD ["mysqld"]

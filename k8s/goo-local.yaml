@@ -6,7 +6,7 @@ metadata:
   labels:
     app: goo-local
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: goo-local
@@ -15,8 +15,20 @@ spec:
       labels:
         app: goo-local
     spec:
-      containers:
+      containers: 
       - name: goo-local
-        image: localhost:5000/goo-local:latest
+        image: 10.100.108.213/goo-local:alpha
+        imagePullPolicy: Always
         ports:
         - containerPort: 7081
+        volumeMounts:
+        - mountPath: /var/lib/orihime/goo-local/dictionary/
+          name: orihime-goo
+      volumes:
+      - name: orihime-alpha-mysql
+        hostPath:
+          path: /var/lib/orihime/mysql/
+      - name: orihime-goo
+        hostPath:
+          path: /var/lib/orihime/goo-local/dictionary/
+          

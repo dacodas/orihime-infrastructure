@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orihime
+  namespace: orihime
+  labels:
+    app: orihime-alpha
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orihime-alpha
+  template:
+    metadata:
+      labels:
+        app: orihime-alpha
+    spec:
+      containers:
+      - name: sbcl
+        image: 10.100.108.213/orihime-sbcl:alpha
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4005
+          containerPort: 80
+        envFrom:
+          - secretRef:
+              name: orihime-alpha-mysql
+        volumeMounts:
+        - mountPath: /var/lib/goo/data/dictionary-entries
+          name: orihime-goo
+      - name: goo-local
+        image: 10.100.108.213/goo-local:alpha
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 7081
+      - name: mysql
+        image: 10.100.108.213/orihime-mysql:alpha
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+        envFrom:
+          - secretRef:
+              name: orihime-alpha-mysql
+        volumeMounts:
+        - mountPath: /var/lib/orihime/mysql/
+          name: orihime-alpha-mysql
+      volumes:
+      - name: orihime-alpha-mysql
+        hostPath:
+          path: /var/lib/orihime/mysql/
+      - name: orihime-goo
+        hostPath:
+          path: /var/lib/orihime/goo-local/dictionary/
+          
