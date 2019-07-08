@@ -13,7 +13,26 @@ spec:
     volumeMounts:
       - mountPath: /var/lib/registry/
         name: registry
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+      - mountPath: /etc/nginx/conf.d/nginx.htpasswd
+        name: nginx-htpasswd-secret
+        subPath: nginx.htpasswd
+      - mountPath: /etc/nginx/nginx.conf
+        name: nginx-conf
+        subPath: nginx.conf
   volumes:
+  - name: nginx-htpasswd-secret
+    secret:
+      secretName: nginx-htpasswd-secret
+  - name: nginx-conf
+    configMap:
+      name: nginx-conf
   - name: registry
     hostPath:
       path: /var/lib/container-registry/
+  
+    
