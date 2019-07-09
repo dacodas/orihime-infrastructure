@@ -29,10 +29,9 @@ RUN pip3 install -r /usr/local/src/anki/requirements.txt
 
 RUN apt-get install -y vim
 
-ARG ORIHIME_GIT_URL=https://github.com/dacodas/orihime
-ARG ORIHIME_HUNCHENTOOT_GIT_URL=https://github.com/dacodas/orihime-hunchentoot
-RUN git clone --depth 1 --branch dependency-change $ORIHIME_GIT_URL /root/quicklisp/local-projects/orihime && \
-    git clone --depth 1 --branch dependency-change $ORIHIME_GIT_URL /root/quicklisp/local-projects/orihime-hunchentoot && \
+ARG ORIHIME_GIT_PATH=https://github.com/dacodas
+RUN git clone --depth 1 --branch dependency-change "$ORIHIME_GIT_PATH/orihime" /root/quicklisp/local-projects/orihime && \
+    git clone --depth 1 --branch dependency-change "$ORIHIME_GIT_PATH/orihime-hunchentoot" /root/quicklisp/local-projects/orihime-hunchentoot && \
     sbcl --eval "(ql:quickload '(:orihime :orihime-hunchentoot :swank))" && \
     rm -r /root/quicklisp/local-projects/orihime && \
     rm -r /root/quicklisp/local-projects/orihime-hunchentoot
@@ -40,8 +39,8 @@ RUN git clone --depth 1 --branch dependency-change $ORIHIME_GIT_URL /root/quickl
 ARG CACHE_BUST=1
 ARG ENVIRONMENT
 ENV ENVIRONMENT=$ENVIRONMENT
-RUN git clone --depth 1 --branch $ENVIRONMENT $ORIHIME_GIT_URL /root/quicklisp/local-projects/orihime && \
-    git clone --depth 1 --branch $ENVIRONMENT $ORIHIME_HUNCHENTOOT_GIT_URL /root/quicklisp/local-projects/orihime-hunchentoot
+RUN git clone --depth 1 --branch $ENVIRONMENT $ORIHIME_GIT_PATH/orihime /root/quicklisp/local-projects/orihime && \
+    git clone --depth 1 --branch $ENVIRONMENT $ORIHIME_GIT_PATH/orihime-hunchentoot /root/quicklisp/local-projects/orihime-hunchentoot
 RUN sbcl --eval "(ql:quickload '(:orihime :orihime-hunchentoot))"
 
 COPY start-orihime-and-swank.lisp /root/

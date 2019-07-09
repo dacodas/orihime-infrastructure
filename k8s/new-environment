@@ -1,0 +1,18 @@
+#!/bin/bash
+
+ENVIRONMENT="$1"
+
+function change_filename()
+{
+    FILENAME="$1"
+    ENVIRONMENT="$2"
+    NEW_FILENAME=$(echo $FILENAME | sed "s/alpha/$ENVIRONMENT/g")
+
+    mv $FILENAME $NEW_FILENAME
+}
+
+export -f change_filename
+
+cp -r alpha "$ENVIRONMENT"
+find "$ENVIRONMENT" -type f -exec sed -i "s/alpha/$ENVIRONMENT/g" {} \;
+find "$ENVIRONMENT" -type f -exec bash -c 'change_filename "$0" '"$ENVIRONMENT"'' {} \;

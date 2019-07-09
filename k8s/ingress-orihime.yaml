@@ -12,3 +12,10 @@ spec:
         backend:
           serviceName: orihime-alpha-web
           servicePort: 80
+  - host: orihime-beta.dacodastrack.com
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: orihime-beta-web
+          servicePort: 80
