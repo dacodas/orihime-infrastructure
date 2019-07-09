@@ -15,9 +15,11 @@ spec:
       labels:
         app: orihime-alpha
     spec:
+      imagePullSecrets:
+        - name: container-registry-dacodastrack-com-secret
       containers:
       - name: sbcl
-        image: 10.100.108.213/orihime-sbcl:alpha
+        image: container-registry.dacodastrack.com/orihime-sbcl:alpha
         imagePullPolicy: Always
         ports:
         - containerPort: 4005
@@ -28,13 +30,26 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/goo/data/dictionary-entries
           name: orihime-goo
+      - name: nginx
+        image: nginx
+        command: ["nginx-debug", "-g", "daemon off;"]
+        ports:
+        - containerPort: 4006
+        volumeMounts:
+          - mountPath: /etc/nginx/ssl/k8s
+            name: nginx-tls
+          - mountPath: /etc/nginx/ssl/certs
+            name: nginx-trusted-ca
+          - mountPath: /etc/nginx/nginx.conf
+            name: nginx-conf
+            subPath: nginx.conf
       - name: goo-local
-        image: 10.100.108.213/goo-local:alpha
+        image: container-registry.dacodastrack.com/goo-local:alpha
         imagePullPolicy: Always
         ports:
         - containerPort: 7081
       - name: mysql
-        image: 10.100.108.213/orihime-mysql:alpha
+        image: container-registry.dacodastrack.com/orihime-mysql:alpha
         imagePullPolicy: Always
         ports:
         - containerPort: 3306
@@ -51,4 +66,13 @@ spec:
       - name: orihime-goo
         hostPath:
           path: /var/lib/orihime/goo-local/dictionary/
+      - name: nginx-tls
+        secret:
+          secretName: tls-secret
+      - name: nginx-trusted-ca
+        secret:
+          secretName: alpha-trusted-ca
+      - name: nginx-conf
+        secret:
+          secretName: alpha-nginx-conf
           

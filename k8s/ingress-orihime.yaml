@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+  namespace: orihime
+spec:
+  rules:
+  - host: orihime.dacodastrack.com
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: orihime-alpha-web
+          servicePort: 80

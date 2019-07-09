@@ -1,0 +1,7 @@
+Some configuration done on the Kubernetes nodes
+
+- Added CA to /etc/docker/certs
+  
+sudo mkdir -p /etc/docker/certs.d/container-registry.dacodastrack.com
+sudo ln -sf /etc/kubernetes/pki/ca.crt /etc/docker/certs.d/container-registry.dacodastrack.com/ca.crt
+

@@ -1,4 +1,4 @@
-(ql:quickload '(:orihime :swank))
+(ql:quickload '(:orihime :orihime-hunchentoot :swank))
 
 ;; Grab the environment variables populated by k8s, there must be a nicer way to do this
 (asdf-utilities:compile-system :orihime :force t)
