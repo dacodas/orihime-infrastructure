@@ -1,0 +1,8 @@
+sudo docker run -it --rm --name certbot \
+            -v "/etc/letsencrypt:/etc/letsencrypt" \
+            -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
+            -v "$(pwd)/ferrous-aleph-250707-5ad1f7f487d7.json:/etc/google.json" \
+            certbot/dns-google \
+            certonly \
+                --manual \
+                -d dacodastrack.com,\*.dacodastrack.com,xn--t8j3dxb8a.xn--q9jyb4c

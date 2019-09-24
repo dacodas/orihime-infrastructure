@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: orihime-alpha
+  name: orihime-beta
   namespace: orihime
   labels:
-    app: orihime-alpha
+    app: orihime-beta
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: orihime-alpha
+      app: orihime-beta
   template:
     metadata:
       labels:
-        app: orihime-alpha
+        app: orihime-beta
     spec:
       imagePullSecrets:
         - name: container-registry-dacodastrack-com-secret
       containers:
       - name: sbcl
-        image: container-registry.dacodastrack.com/orihime-sbcl:alpha
+        image: container-registry.dacodastrack.com/orihime-sbcl:beta
         imagePullPolicy: Always
         ports:
         - containerPort: 4005
@@ -31,7 +31,7 @@ spec:
           periodSeconds: 10
         envFrom:
           - secretRef:
-              name: orihime-alpha-mysql
+              name: orihime-beta-mysql
         volumeMounts:
         - mountPath: /var/lib/goo/data/dictionary-entries
           name: orihime-goo
@@ -49,23 +49,12 @@ spec:
             name: nginx-conf
             subPath: nginx.conf
       - name: goo-local
-        image: container-registry.dacodastrack.com/goo-local:alpha
+        image: container-registry.dacodastrack.com/goo-local:beta
         imagePullPolicy: Always
         ports:
         - containerPort: 7081
-      - name: mysql
-        image: container-registry.dacodastrack.com/orihime-mysql:alpha
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3306
-        envFrom:
-          - secretRef:
-              name: orihime-alpha-mysql
-        volumeMounts:
-        - mountPath: /var/lib/orihime/mysql/
-          name: orihime-alpha-mysql
       volumes:
-      - name: orihime-alpha-mysql
+      - name: orihime-beta-mysql
         hostPath:
           path: /var/lib/orihime/mysql/
       - name: orihime-goo
@@ -79,5 +68,5 @@ spec:
           secretName: trusted-ca
       - name: nginx-conf
         secret:
-          secretName: alpha-nginx-conf
+          secretName: beta-nginx-conf
           

@@ -12,6 +12,9 @@ spec:
     port: 80
     targetPort: 80
 --- 
+# This really needs a proxy in front of it to help me choose which pod
+# I want to get into, or maybe I can just `cat /etc/hostname` or
+# something once inside to figure out which one I'm in
 apiVersion: v1
 kind: Service
 metadata:
@@ -26,4 +29,4 @@ spec:
     protocol: TCP
     port: 4006
     targetPort: 4006
-    nodePort: 30006
+    nodePort: 30007

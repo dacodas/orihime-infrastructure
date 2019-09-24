@@ -36,6 +36,9 @@ RUN git clone --depth 1 --branch dependency-change "$ORIHIME_GIT_PATH/orihime" /
     rm -r /root/quicklisp/local-projects/orihime && \
     rm -r /root/quicklisp/local-projects/orihime-hunchentoot
 
+RUN apt-get install python3 && \
+    pip3 install bcrypt
+
 ARG CACHE_BUST=1
 ARG ENVIRONMENT
 ENV ENVIRONMENT=$ENVIRONMENT

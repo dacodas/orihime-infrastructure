@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+  namespace: orihime
+spec:
+  rules:
+  - host: orihime.dacodastrack.com
+    http:
+      paths:
+      - backend:
+          serviceName: orihime-django-production
+          servicePort: 80
+  - host: xn--t8j3dxb8a.xn--q9jyb4c
+    http:
+      paths:
+      - backend:
+          serviceName: orihime-django-production
+          servicePort: 80
+  - host: orihime-production.dacodastrack.com
+    http:
+      paths:
+      - backend:
+          serviceName: orihime-django-production
+          servicePort: 80
+  - host: orihime-beta.dacodastrack.com
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: orihime-django-beta
+          servicePort: 80

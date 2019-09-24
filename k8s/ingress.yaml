@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: test-ingress
+  namespace: default
 spec:
   rules:
   - host: container-registry.dacodastrack.com
@@ -10,4 +11,25 @@ spec:
       - path: 
         backend:
           serviceName: registry
+          servicePort: 80
+  - host: packages.dacodastrack.com
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: packages-reverse-proxy
+          servicePort: 80
+  - host: www.dacodastrack.com
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: landing-page
+          servicePort: 80
+  - host: dacodastrack.com
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: landing-page
           servicePort: 80

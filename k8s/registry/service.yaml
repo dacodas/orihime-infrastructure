@@ -6,6 +6,7 @@ metadata:
     haproxy.org/load-balance: "leastconn"
     haproxy.org/pod-maxconn: "50"
 spec:
+  type: NodePort
   clusterIP: 10.100.108.213
   selector:
     app: registry
@@ -13,3 +14,4 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
+    nodePort: 30000
